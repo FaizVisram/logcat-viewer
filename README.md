@@ -3,4 +3,6 @@ Logcat Viewer
 
 Make logcat readable.
 
-[GitHub](http://github.com)
+Repository
+----------
+Logcat Viewer is hosted on [GitHub](https://github.com/FaizVisram/logcat-viewer).
