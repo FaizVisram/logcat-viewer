@@ -10,30 +10,68 @@
         <link href='//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 
         <script type="application/javascript">
+            var logcat = '';
+
             $(document).ready(function() {
                 $('button#submit').click(function() {
-                    var raw = $('#log-input').val().split('\n');
+                    logcat = $('#log-input').val().split('\n');
+                    formatLog(logcat);
+                });
+
+                $('#filter').bind('input', function() {
+                    filterLogcat($('#filter').val());
+                });
+
+                function filterLogcat(filter) {
+                    if (filter) {
+                        var filtered = '';
+                        for (var i = 0; i < logcat.length; i++) {
+                            if (logcat[i].toLowerCase().indexOf(filter.toLowerCase()) > -1) {
+                                filtered += logcat[i] + '\n';
+                            }
+                        }
+                        console.log(filtered);
+                        formatLog(filtered.split('\n'));
+                    } else {
+                        formatLog(logcat);
+                    }
+                }
+
+                function formatLog(raw) {
                     var log = '';
                     var type = '';
 
+                    log += '<span class="line">';
                     for (var i = 0; i < raw.length; i++) {
                         if (raw[i].indexOf(' A/') > -1) {
+                            log += '</span>'
                             log += '<br>';
+                            log += '<span class="line">';
                             type = 'a';
                         } else if (raw[i].indexOf(' E/') > -1) {
+                            log += '</span>'
                             log += '<br>';
+                            log += '<span class="line">';
                             type = 'e';
                         } else if (raw[i].indexOf(' W/') > -1) {
+                            log += '</span>'
                             log += '<br>';
+                            log += '<span class="line">';
                             type = 'w';
                         } else if (raw[i].indexOf(' I/') > -1) {
+                            log += '</span>'
                             log += '<br>';
+                            log += '<span class="line">';
                             type = 'i';
                         } else if (raw[i].indexOf(' D/') > -1) {
+                            log += '</span>'
                             log += '<br>';
+                            log += '<span class="line">';
                             type = 'd';
                         } else if (raw[i].indexOf(' V/') > -1) {
+                            log += '</span>'
                             log += '<br>';
+                            log += '<span class="line">';
                             type = 'v';
                         }
 
@@ -42,7 +80,7 @@
                     }
 
                     $('#log-output').html(log);
-                });
+                }
             });
         </script>
 
@@ -54,6 +92,8 @@
 
         <textarea id="log-input" placeholder="Past logcat here..."></textarea>
         <button id="submit">Format</button>
+        <br>
+        <input type="search" id="filter" placeholder="Filter"></input>
         <div id='log-output'></div>
 
         <footer>
