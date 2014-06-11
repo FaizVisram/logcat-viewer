@@ -1,7 +1,10 @@
 Logcat Viewer
 =============
-
 Make logcat readable.
+
+Live Demo
+---------
+View the live demo [here](https://faizvisram.github.io/logcat-viewer).
 
 Repository
 ----------
